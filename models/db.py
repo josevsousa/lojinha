@@ -64,7 +64,10 @@ crud = Crud(db)
 auth.define_tables(username=False, signature=False)
 
 ## configure email: 'logging' or
-
+mail = auth.settings.mailer
+mail.settings.server = 'logging' or 'mail.seusite.com.br:587'
+mail.settings.sender = 'user'
+mail.settings.login = 'senha'
 
 
 ## configure auth policy
