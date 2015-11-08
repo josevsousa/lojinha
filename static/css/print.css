@@ -1,0 +1,10 @@
+body	{background: #FFF; color: #000; font: 12pt serif;}
+a:link, a:visited	{color: #333; text-decoration: underline;}
+a[href]:after		{content: " (" attr(href) ")";} /*imprimir o endereco do link*/
+#menu, #lateral		{display: none;}
+
+/*
+Quando o texto estiver dentro de um div de largura fixa, 
+é uma boa idéia ajustar a largura e a margem para a folha de papel:
+*/
+#texto				{width: 100%; margin: auto;}

@@ -1,0 +1,46 @@
+{{extend 'layoutLojinha.html'}}
+<script>
+	$(document).ready(function(){                   //({ prefix:'R$ ',
+		$("#produtos_preco_produto_lojinha").maskMoney({ allowNegative: true, thousands:'', decimal:'.'});
+
+		// auto
+		$('input[type=text]').addClass('form-control ip_text');
+		$('form').addClass('formEditar');
+		$('input[type=submit]').val('Cadastrar');
+		$("tbody tr:nth-child(4)").css('display','none')
+
+
+	});
+</script>
+<style>
+	.formm form table{width: 100%}
+	.titVolt {
+	    display: inline-flex;
+	}
+	.titVolt h3 {
+    	padding: 3px 14px;
+	}
+	hr {
+    	margin-top: 0px;
+	}
+</style>
+<div class="titVolt">
+	<nav>
+	  <ul class="pager">
+	    <li class="previous"><a href="listarProdutos?menu=produtos"><span aria-hidden="true">&larr;</span> voltar</a></li>
+	    <!-- <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li> -->
+	  </ul>
+	</nav>
+	<h3>Cadastro de produto</h3>
+</div>
+<hr>
+<div class="row">
+	<div class="col-md-6 formm">
+		{{=formCadastro}}
+		
+	</div>
+	<div class="col-md-6">
+		
+	</div>
+</div>
+

@@ -1,0 +1,289 @@
+{{extend 'layoutLojinha.html'}}
+ <script>
+  $(document).ready(function(){
+    $("#btFecharCaixa").attr('disabled',true);//
+
+    //$("#comprovantePagSeg span").text()
+    
+    $("#btFecharCaixa").on('click',function(){
+      $(this).text("Enviando e-mail...").attr('disabled',true);
+      var tipoVenda = $('.tpv').prop('value');
+      var valorTotal = $('#subTotal').text().replace('R$','').trim();
+      var desconto = $('.vermelho').text().replace('R$','').trim();
+
+      $("#transitory").val(tipoVenda+";"+valorTotal+";"+desconto);
+      ajax('fecharVenda',['transitory'],'ret');
+
+    });
+    $("#btCancelarCaixa").on('click',function(){
+        var c = confirm("Tem certeza que deseja cancelar a venda???")
+        if (c == true) {
+          ajax('cancelarVenda',['transitory']);
+          $(location).attr('href',"cliente?menu=caixa");//redireciona a pagina
+        }else{
+          console.log("Venda mantida!")
+        };
+    });
+
+    function finalizar(){
+      console.log($('#ret').text())
+    };
+
+    $('.tpv').on('change',function(){
+      var valor = $(this).val();
+      if (valor == "aVista"){
+        $("#din, #por, #btFecharCaixa").attr('disabled',false);
+        $(".d").show(400);
+        $('#comprovantePagSeg').hide(400)
+      }else if(valor == "credito" || valor == "debito" ){
+        $('#comprovantePagSeg').show(400);
+        zerarDesconto();
+        $("#btFecharCaixa").attr('disabled',false);
+        $("#calcDesc").hide(400);
+        $(".d").hide(400)
+      }else{
+        zerarDesconto();
+        $("#btFecharCaixa").removeClass('btF');
+        $("#btFecharCaixa").attr('disabled',true);
+        $("#calcDesc").hide(400);
+        $(".d").hide(400);
+        $('#comprovantePagSeg').hide(400)
+
+      }
+
+    });
+
+    var totall = parseFloat($("#subTotal").text().replace('R$','').trim());
+
+    $("#din").on('keyup',function(){
+      var d = $(this).val(); //dinheiro
+      var p = $('#por').val();//porcentage
+      vizor(d,p);
+        
+    });
+
+    $("#por").on('keyup',function(){
+      var p = $(this).val();
+      var d = $('#din').val();
+      if (p == '' && d == '') {
+        vizor(d,p);
+        $("#calcDesc").hide(400);//esconder
+        $('#subTotal').text($(".verde").text());
+      }else{
+        vizor(d,p);
+        
+      };
+    });
+
+
+
+    function vizor(din, por){
+      if (din == '' && por == '') {
+        $("#calcDesc").hide(400);//esconder
+        $('#subTotal').text($(".verde").text());
+        $('.vermelho').text('R$ 0.00')
+      }else{
+
+        if (din == "") {
+          din = "0"
+        }else if(por == "") {
+          por = "0"
+        };
+
+
+        var desc_din = parseFloat(din);
+        var desc_porcentage = parseFloat(por);
+
+        var desconto = (totall - (desc_din+((totall*desc_porcentage)/100)));
+        var viewCalc = 'Total ( <span class="verde">R$ '+
+              totall.toFixed(2)+'</span> ) <b>-</b> Desconto ( <span class="vermelho"> R$ '+
+              parseFloat(totall - desconto).toFixed(2)+
+              '</span> )';
+
+        $('#subTotal').text("R$ "+desconto.toFixed(2)) //SUBTOTAL
+        $("#calcDesc").html(viewCalc);
+        $("#calcDesc").show(400);//mostrar
+
+
+      }
+    }//fim vizor
+
+
+    function zerarDesconto(){
+      var vv = $(".verde").text();
+      if (vv != '') {
+        $('#subTotal').text(vv);
+      };
+      $("#din, #por").val('');
+      $(".vermelho").text('0');
+    }
+  });   
+
+</script>
+
+
+<style>
+
+@media only print
+{
+  /*  body * { display: none !important; }
+    body:after { content: "Don't waste paper!"; }*/
+    .btPrint, #nav_home, .btVolt, .alert-dismissable, .footer, #socialdrawer {display:none !important;}
+    .logoP {display:block !important;}
+
+}
+
+span#d {
+    color: red;
+}
+span.verde {
+    color: #008600;
+}
+span.vermelho {
+    color: #E81D1D;
+}
+button#btFecharCaixa {
+    width: 100%;
+    height: 58px;
+    font-size: x-large;
+    background-image: none;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    font-weight: normal;
+    transition: background-color 0.5s ease;
+
+}
+button#btFecharCaixa:hover{
+  transition: background-color 0.5s ease;
+  background-color: #59DA90;
+}
+button#btCancelarCaixa {
+    float: right;
+    margin-top: 18px;
+    font-size: large;
+    background-image: none;
+    background-color: #F78585;
+    color: white;
+    border: none;
+    font-weight: normal;
+    transition: background-color 0.5s ease;
+}
+button#btCancelarCaixa:hover{
+  transition: background-color 0.5s ease;
+  background-color: #FF3636;
+}
+
+
+#bodyPrint .btD {
+    display: none;
+}
+div#enviarEmail {
+    margin-top: 5px;
+    width: 138px;
+}
+
+div#subTotal {
+    font-size: -webkit-xxx-large;
+    text-align: center;    
+    padding: 0px 15px 15px 15px;
+}
+.cfr>div {
+    padding-top: 10px;
+}
+.fVenda label{
+  font-size: 23px;
+}
+.fVenda select, .fVenda input{
+  height: 54px;
+  font-size: 29px;
+}
+#basic-addon1, #basic-addon2{
+  font-size: 26px;
+}
+.cfr{margin-top: 35px}
+.roww.d {
+    margin-top: 35px;
+}
+.roww .col-md-6 {
+    margin: -4px 0px 13px 0px;
+}
+div#calcDesc {
+    margin-left: 14px;
+    font-size: 19px;
+}
+b#emailEnviado {
+    color: #047B46;
+}
+</style>
+<!-- contado do ajax -->
+<input type="text" id="transitory" name="transitory" style="display:none">
+<!-- contado do ajax -->
+<div class="container">
+<div id="ret">
+   <ol class="breadcrumb">
+    <li><a href="{{=URL('cliente?menu=caixa')}}"><span class="badge">1</span> Cliente</a></li>
+    <li><a href="{{=URL('produto?menu=caixa')}}"><span class="badge">2</span> Produto</a></li>
+    <li class="at"><span class="badge badgeAtivo">3</span> Caixa</li>
+        <li id="codView">COD: <strong>{{=session.venda.codigo}}</strong> </li>
+  </ol>
+  <div class="col-md-6 fVenda">
+    <div class="roww">
+      <label >Tipo venda!</label>
+      <div class="form-group">
+        <select class="form-control tpv">
+          <option value="0"></option>
+          <option value="aVista">A vista</option>
+          <option value="credito">Crédito</option>
+          <option value="debito">Débito</option>   
+          <option value="debito">Cheque</option>  
+          <option value="debito">Boleto</option>           
+        </select>
+      </div>
+    </div>  
+    <div class="roww d" style="display:none">
+      <label >Desconto!</label>
+      <div class="form-group">
+        <div class="roww">
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1"><b>$</b></span>
+              <input type="number" class="form-control" id="din"  aria-describedby="basic-addon1">
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2"><b>%</b></span>
+              <input type="number" class="form-control" id="por"  aria-describedby="basic-addon1">
+            </div>
+          </div>
+        </div>  
+      </div>
+
+    </div> 
+    <h2 id="comprovantePagSeg" style="display:none"><b>Cel.:</b> <span> {{=session.venda.celular}}</span></h2> 
+  </div>
+  <div class="col-md-6 cfr">
+    <div class="panel panel-default">
+      <div id="calcDesc" style="display:block">
+        
+      </div>
+      <div id="subTotal" class="panel-body">
+        {{='R$ %.2f'%session.venda.sTotal}}
+      </div>
+    </div>
+      <button type="button" id="btFecharCaixa">fechar caixa</button>
+      <div class="col-md-3" id="enviarEmail">
+        <div class="checkbox">
+          <!-- enviar email? -->
+          <label>
+            <input id="e_email" name="e_email" type="checkbox">Enviar e-mail!
+          </label>
+        </div>
+      </div>
+      <button type="button" id="btCancelarCaixa">Cancelar venda</button>
+  </div>
+</div>  
+</div><!-- fim container -->
+

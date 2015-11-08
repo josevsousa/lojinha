@@ -1,0 +1,120 @@
+{{extend 'layoutLojinha.html'}}
+ <link rel="stylesheet" href="{{=URL('static','jquery-ui-1.11.4.custom/jquery-ui.css')}}">
+ <script src="{{=URL('static','jquery-ui-1.11.4.custom/jquery-ui.js')}}"></script>
+ <script>
+  $(document).ready(function(){
+    if ($('#retornoCliente ul li span#nn').text() != "") {
+      $(".breadcrumb li.p").show()
+    }else{
+      $("#codView").text("Caixa Livre!")
+    };
+
+
+    if($('#retornoCliente ul li:first-child span').text() != ""){
+      $("#produtos, #caixa").show()
+    } 
+
+    var listaNomeCLientes = 
+    [ 
+      //pega todos os nomes dos clientes
+      {{for item in db(db.clientes.id>0).select('nome'):}}
+        "{{=item.nome}}",
+      {{pass}}
+    ];
+    $( "#buscarNome" ).autocomplete({
+      source: listaNomeCLientes,
+       select: function( event, ui ) {
+        //pega o cliente selecionado
+        $("#itens").val(ui.item.value);
+        $(".breadcrumb li.p").show(400)
+        /* 
+          busca no db o cliente e retorna a row do cliente ja formatada com os helpers
+          e manda para a div com o id retornoCliente
+        */
+        ajax('clientes_retorno',['itens'], location.reload());
+      }
+       
+    }).on( "autocompletecreate", function( event, ui ) {} )
+  });
+
+  // $(function(){
+  //   document.querySelector('.fechar').addEventListener('click', function(e){
+  //     console.log(this.parentElement.parentElement.parentElement)
+  //   });
+  // })
+
+ </script>
+<style>
+  .addItem {
+    margin-bottom: 13px;
+    float: left;
+    padding: 16px 0 0 0;
+    margin-left: 0px !important;
+}
+.addItem input[name="codigo"] {
+    width: 112px;
+}
+.addItem input[name="qtde"] {
+    width: 112px;
+}
+.addItem input, .addItem button {
+    float: left;
+    margin-left: 5px;
+}
+.addItem input[name="produto"] {
+    width: 484px;
+}
+.addItem input, .addItem button {
+    float: left;
+    margin-left: 5px;
+}
+.addItem input, .addItem button {
+    float: left;
+    margin-left: 5px;
+}
+td.JpositionDel {
+    width: 46px;
+}
+</style>
+
+<div id="retornoClient"></div>
+    <input type="text" id="itens" name="itens" style="display:none">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="at"><span class="badge badgeAtivo">1</span> Cliente</li>
+        <li style="display:none" class="p"><a href="{{=URL('lojinha','caixa','produto?menu=caixa')}}"><span class="badge">2</span> Produtos</a></li>    
+<!--         {{if not session.itensVendaTable != '':}}
+          <li class="cx"><a href="{{=URL('lojinha','caixa','caixa?menu=caixa')}}"><span class="badge">3</span> Caixa</a></li>
+          {{
+           =session.itensVendaTable
+          }}
+        {{pass}} -->
+        
+      
+        <li id="codView">COD: <strong>{{=session.venda.codigo}}</strong> </li>
+      </ol>
+    </div>
+    <div role="tabpanel" class="tab-pane active" id="home">
+    <div class="col-md-6">
+          <div class="row">
+              <div class="col-md-7">
+                  <input id="buscarNome" class="form-control ui-autocomplete-input" type="text" name="" placeholder="Buscar cliente" autocomplete="off">
+                  <div style="position: absolute;" id="suggestions" class="suggestions"></div>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-info " data-toggle="modal" data-target="#modal-cadastrar" name="maisClientes" 
+                   onclick="document.location='{{=URL("lojinha","clientes","cadastrarClientes")}}'">
+                   Cadastrar
+                </button>
+              </div>
+          </div>
+          <hr>
+          <div id="retornoCliente">
+            {{=session.venda.userDiv}}  
+          </div>      
+    	</div>	
+    	<div class="col-md-6">
+    		...
+    	</div>	
+  </div><!--fim tabpanel-->
+</div>  

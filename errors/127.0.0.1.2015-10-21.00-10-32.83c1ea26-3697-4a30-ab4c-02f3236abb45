@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.ValueError'> need more than 1 value to unpack"
+p3
+sS'layer'
+p4
+S'/home/python/web2pyLojinha/applications/lojinha/controllers/clientes.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n\n@auth.requires_login()\ndef cadastrarClientes():\n  \treturn dict(formCadastro=crud.create(db.clientes))\n\n@auth.requires_login()\ndef listarClientes():\n\tclientes = db(db.clientes.id>0).select()\n\t#return dict(livros=livros)\n\n\t#virtaul fields\n\tclass Virtual(object):\n\t\tdef botoes(self):\n\t\t\t#admin\n\t\t\tif auth.has_membership(\'admin\'):   #URL(\'clientes\',\'deletar\',args=[self.clientes.id])\n\t\t\t\tbts = DIV(XML(A(SPAN(_class=\'glyphicon glyphicon-eye-open\'),_href=URL(\'clientes\',\'select\',args=[self.clientes.id]),_class=\'btn btn-default f Jview btn-xs\')),XML(A(SPAN(_class=\'glyphicon glyphicon-pencil\'),_href=URL(\'clientes\',\'update\',args=[self.clientes.id]),_class=\'btn btn-default Jview btn-xs\')),XML(A(SPAN(_class=\'glyphicon glyphicon-remove\'),_id=self.clientes.id,_href=\'#\',_class=\'btn btn-default fechar Jview btn-xs\')),_class=\'btn-group JpositionA\')\n\t\t\t#user qualquer\n\t\t\telse:\n\t\t\t\tbts = DIV(XML(A(SPAN(_class=\'glyphicon glyphicon-eye-open\'),_href=URL(\'clientes\',\'select\',args=[self.clientes.id]),_class=\'btn btn-default f Jview btn-xs\')),XML(A(SPAN(_class=\'glyphicon glyphicon-pencil\'),_href=URL(\'clientes\',\'update\',args=[self.clientes.id]),_class=\'btn btn-default Jview btn-xs\')),XML(A(SPAN(_class=\'glyphicon glyphicon-remove\'),_href=\'#\',_class=\'btn btn-default Jview btn-xs\',_disabled=\'disabled\')),_class=\'btn-group JpositionA\')\n\t\t\treturn bts\n\n\tclientes.setvirtualfields(campos_virtual = Virtual())\t\t\n\t\n\treturn dict(formListar=clientes)\n\n\n\n# ===================================================\n#select\ndef select():\n\ttable = db(db.clientes.id==request.args[0]).select()\n\treturn dict(table=table)\n#insert\ndef inserir():\n\treturn dict(form=crud.create(db.clientes))\n#update\ndef update():\n\treturn dict(formUpdate=crud.update(db.clientes,request.args(0),_class="formEditar"))\n#delete\n@auth.requires_membership(\'admin\')\ndef deletar():\n\tdb(db.clientes.id == request.vars.cod).delete()\n\treturn \'\'\n\n# ===================================================\nresponse._vars=response._caller(listarClientes)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/python/web2pyLojinha/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/clientes.py", line 47, in <module>\n  File "/home/python/web2pyLojinha/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/python/web2pyLojinha/gluon/tools.py", line 3774, in f\n    return action(*a, **b)\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/clientes.py", line 9, in listarClientes\n    clientes = db(db.clientes.id>0).select()\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/objects.py", line 2002, in select\n    return adapter.select(self.query,fields,attributes)\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/adapters/sqlite.py", line 122, in select\n    return super(SQLiteAdapter, self).select(query, fields, attributes)\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/adapters/base.py", line 1286, in select\n    return self._select_aux(sql,fields,attributes)\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/adapters/base.py", line 1244, in _select_aux\n    rows = self._fetchall()\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/adapters/base.py", line 1234, in _fetchall\n    return self.cursor.fetchall()\n  File "/usr/lib/python2.7/sqlite3/dbapi2.py", line 68, in convert_timestamp\n    datepart, timepart = val.split(" ")\nValueError: need more than 1 value to unpack\n'
+p11
+s.

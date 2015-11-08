@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.IndexError'> list index out of range"
+p3
+sS'layer'
+p4
+S'/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py'
+p5
+sS'code'
+p6
+S'def index(): \n    path = request.folder+"static/mysqlImport/produtos.csv"\n    f = file(path,\'r\')\n\n    # linha = f.readline().split(\',\')\n    \n    for l in f.readlines():\n    \tlinha = l.split(\',\')\n    \tdb.produtos.insert(codigo_produto=linha[1],nome_produto=linha[2],preco_produto_lojinha=linha[3],dataGravado=linha[4])\n    \n    f.close()\n\n    return dict()\nresponse._vars=response._caller(index)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/python/web2pyLojinha/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py", line 14, in <module>\n  File "/home/python/web2pyLojinha/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py", line 9, in index\n    db.produtos.insert(codigo_produto=linha[1],nome_produto=linha[2],preco_produto_lojinha=linha[3],dataGravado=linha[4])\nIndexError: list index out of range\n'
+p11
+s.

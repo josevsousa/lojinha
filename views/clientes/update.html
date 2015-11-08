@@ -1,0 +1,50 @@
+{{extend 'layoutLojinha.html'}}
+
+<script>
+	$(document).ready(function(){
+    	$("#delete_record__row, .w2p_fw span").hide();
+		$('input[type=text]').addClass('form-control ip_text');
+		// $('.upload').addClass('btn btn-default');
+		$('input[type=submit]').val('Atualizar');
+		$("select").addClass('form-control');
+		// $("tbody tr:nth-child(5)").css('display','none')
+		// $('tr').addClass('tr_div')
+	});
+</script>
+<style>
+	table tr td input{
+	    margin-bottom: 7px;
+	}	
+	input#clientes_foto_cliente {
+    	margin-top: 8px;
+	}
+	.formm form table{width: 100%}
+		.titVolt {
+	    display: inline-flex;
+	}
+	.titVolt h3 {
+    	padding: 3px 14px;
+	}
+	hr {
+    	margin-top: 0px;
+	}	
+</style>
+<div class="titVolt">
+	<nav>
+	  <ul class="pager">
+	    <li class="previous"><a href="{{=URL('clientes','listarClientes?menu=clientes')}}"><span aria-hidden="true">&larr;</span> voltar</a></li>
+	    <!-- <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li> -->
+	  </ul>
+	</nav>
+	<h3>Editar cliente</h3>
+</div>
+<hr>
+<div class="row">
+	<div class="col-md-6 formm">
+		{{=formUpdate}}
+		
+	</div>
+	<div class="col-md-6">
+		
+	</div>
+</div>

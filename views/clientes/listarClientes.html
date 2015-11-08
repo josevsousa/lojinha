@@ -1,0 +1,71 @@
+{{extend 'layoutLojinha.html'}}
+
+
+
+<script>
+	$(document).ready(function(){
+	    // $('#minhaTabela table').attr('id', 'dataTable').addClass('display');
+	    $('#dataTable').DataTable({
+	        "scrollX": true,
+	        "language": {
+	          "url": "{{=URL('static','js/tradutorTable.json')}}"
+	        } 
+	    });
+	    $('.fechar').on('click',function(){
+	    		var x = $(this).attr('id');
+	    		var c = confirm("Deseja mesmo apagar?");
+	    		if (c == true) {
+		    	 	//--
+		    		$("input[name=cod]").val(x);
+		    		ajax('deletar',['cod']); //chamar a funcao para apagar no banco
+		    		 //$(this).parent().parent().parent().hide(400) //esconder a 
+	    		 	location.reload();
+	    		}else{
+	    			console.log("Nao apagado")
+	    		};
+	    });
+
+
+
+
+	})
+</script>
+<style type="text/css">
+/*	td#opcoes {width: 201px;}
+	td#opcoes div{float: right;}
+	td#opcoes div button{margin-right: 0px !important}
+	.idS {display:none !important;}
+*/	.JpositionA{float: right;}
+	.JpositionA a{margin-right: 0px !important}
+
+</style>
+
+
+
+<input type="text"  name='cod' style="display:none">
+<div id="minhaTabela" class="container">
+		<a class="btn btn-default" href="/lojinha/clientes/cadastrarClientes?menu=clientes"><span class="glyphicon glyphicon-plus"></span> Novo Cliente</a>
+	
+	<hr>
+	<table id="dataTable" class="table table-striped hover" cellspacing="0" width="100%" >
+		<thead>
+			<tr>
+				<th>Nome do Cliente</th>
+				<th>Celular</th>
+				<th>Email</th>
+				<th></th>
+			</tr>
+			<tbody>
+				{{for cliente in formListar:}}
+					<tr>
+						<td>{{=cliente.clientes.nome}}</td>
+						<td>{{=cliente.clientes.celular}} : {{=cliente.clientes.operadora}}</td>
+						<td>{{=cliente.clientes.email}}</td>
+						<td class="opcoes">{{=cliente.campos_virtual.botoes}}</td>
+
+					</tr>
+				{{pass}}		
+			</tbody>
+		</thead>
+	</table>
+</div>

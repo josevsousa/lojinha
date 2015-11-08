@@ -1,0 +1,54 @@
+{{extend 'layoutLojinha.html'}}
+<script>
+	$(document).ready(function(){
+		$('#clientes_celular').mask("(99) 99999-9999");
+
+		// auto
+		$('input[type=text]').addClass('form-control ip_text');
+		$('form').addClass('formEditar');
+		$('input[type=submit]').val('Cadastrar');
+		$("select").addClass('form-control');
+		$("tbody tr:nth-child(5)").css('display','none')
+
+		$("#SelectItensTipoPagamento").on('change',function(e){
+			console.log(e)
+		})
+
+	});
+</script>
+<style>
+	input#clientes_foto_cliente {
+    	margin-top: 8px;
+	}
+	.formm form table {width: 100%}
+	.titVolt {
+	    display: inline-flex;
+	}
+	.titVolt h3 {
+    	padding: 3px 14px;
+	}
+	hr {
+    	margin-top: 0px;
+	}
+
+</style>
+<div class="titVolt">	
+	<nav>
+	  <ul class="pager">
+	    <li class="previous"><a href='listarClientes?menu=clientes'><span aria-hidden="true">&larr;</span> voltar</a></li>
+	    <!-- <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li> -->
+	  </ul>
+	</nav>
+	<h3>Cadastro de Cliente</h3>
+</div>	
+<hr>
+<div class="row">
+	<div class="col-md-6 formm">
+		{{=formCadastro}}
+		
+	</div>
+	<div class="col-md-6">
+		
+	</div>
+</div>
+

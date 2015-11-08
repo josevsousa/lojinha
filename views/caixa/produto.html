@@ -1,0 +1,178 @@
+{{extend 'layoutLojinha.html'}}
+ <link rel="stylesheet" href="{{=URL('static','jquery-ui-1.11.4.custom/jquery-ui.css')}}">
+ <script src="{{=URL('static','jquery-ui-1.11.4.custom/jquery-ui.js')}}"></script>
+ <script>
+  $(document).ready(function(){
+    $(".w2p_fw span").hide();
+    $("#codigo").focus();
+    if ($("#ttB tr")[0]) {
+      $(".cx").show()
+    };
+
+    //=======================LISTA ITENS PRODUTO ================================
+      //busca itens no db
+      var lista_NomeCodigo = [
+        {{for item in db(db.produtos.id>0).select('codigo_produto','nome_produto'):}}
+         {codigo:"{{=item.codigo_produto}}",nome:"{{=item.nome_produto}}"},
+        {{pass}}
+      ];
+      //-------------------------- popula codigo
+      var listaCodigoProdutos = [];
+      for(item in lista_NomeCodigo){
+        listaCodigoProdutos.push( lista_NomeCodigo[item].codigo ) 
+      }
+      //autocomplete do codigo
+      $( "#codigo" ).autocomplete({
+        source: listaCodigoProdutos,
+         select: function( event, ui ) {
+          //add nome ao input nome
+          $("#qtde").attr('disabled',false).focus();
+          var x = lista_NomeCodigo.filter(function(item){
+            return item.codigo === ui.item.value;
+          });
+          //add ao campo nome
+          $("#produto").val(x[0].nome);
+        }
+      }).on( "autocompletecreate", function( event, ui ) {} );
+      //libera a tecla addItem
+      $("#qtde").change(function(){
+          $("#addItem").attr('disabled',false).focus();
+      })
+
+      $("#addItem").on('click',function(){
+        $(this).text("Registrando...").attr('disabled',true);
+        ajax('addProdutoAjax',['codigo','qtde','produto'],location.reload());
+      })
+      
+      //------------------------- popula produtos
+      var listaNomeProdutos = [];
+      for(item in lista_NomeCodigo){
+        listaNomeProdutos.push( lista_NomeCodigo[item].nome ) 
+      }
+      //autocomplete do produto
+      $( "#produto" ).autocomplete({
+        source: listaNomeProdutos,
+         select: function( event, ui ) {
+          //add produto ao input produto
+          $("#qtde").attr('disabled',false).focus();
+          var x = lista_NomeCodigo.filter(function(item){
+            return item.nome === ui.item.value;
+          });
+          //add ao campo produto
+          $("#codigo").val(x[0].codigo)
+        }
+      }).on( "autocompletecreate", function( event, ui ) {} )
+      //------------------------- fim popula produtos
+
+
+      // botao deletar item
+      // $(".JpositionDel .fechar").on('click',function(){
+      //   $(this).parent().parent().parent().hide(400)
+      // });
+    //=======================LISTA ITENS================================
+    
+    //============== DEL ITEM ===============
+
+    $(".fechar").on('click',function(){
+      var c = confirm("Deletar produto?")
+      if (c == true) {
+        var i = $(this).parent().parent().index(); //pega posicao da row
+        var v = $(this).parent().parent()[0].children[4].textContent.replace("R$ ","");//pega valor da celula 4 da row
+        $("#delIndex").val(i+";"+v);//envia para o value do input
+        ajax('delItemProduto',['delIndex']);//chama funcao do python
+        $(location).attr('href',"produto?menu=caixa");//redireciona a pagina
+      }else{
+        console.log("Registro mantido!")
+      };
+      // $(this).parent().parent().hide(400)
+    })
+
+
+  });
+
+  // $(function(){
+  //   document.querySelector('.fechar').addEventListener('click', function(e){
+  //     console.log(this.parentElement.parentElement.children[0])
+  //   });
+  // })
+
+ </script>
+<style>
+  .addItem {
+    margin-bottom: 13px;
+    float: left;
+    padding: 16px 0 0 0;
+    margin-left: 0px !important;
+}
+.addItem input[name="codigo"] {
+    width: 112px;
+}
+.addItem input[name="qtde"] {
+    width: 112px;
+}
+.addItem input, .addItem button {
+    float: left;
+    margin-left: 5px;
+}
+.addItem input[name="produto"] {
+    width: 484px;
+}
+.addItem input, .addItem button {
+    float: left;
+    margin-left: 5px;
+}
+.addItem input, .addItem button {
+    float: left;
+    margin-left: 5px;
+}
+td.JpositionDel {
+    width: 46px;
+}
+
+/*input.form-control.input-lg.total {
+    max-width: 234px;
+    text-align: center;
+    color: chartreuse;
+    font-size: xx-large;
+    background-color: #3F5A3F;
+}*/
+</style>
+<input type="text" name="delIndex" id="delIndex" style="display:none">
+<div class="tab-content">
+  <ol class="breadcrumb">
+    <li><a href="{{=URL('lojinha','caixa','cliente?menu=caixa')}}"><span class="badge">1</span> Cliente</a></li>
+    <li class="at"><span class="badge badgeAtivo">2</span> Produto</li>
+    <li style="display:none" class="cx"><a href="{{=URL('lojinha','caixa','caixa?menu=caixa')}}"><span class="badge">3</span> Caixa</a></li>
+        <li id="codView">COD: <strong>{{=session.venda.codigo}}</strong> </li>
+  </ol>
+  <div id="profile">
+    <!-- row -->
+    <div class="row addItem">
+       <input class="form-control input-lg ui-autocomplete-input" id="codigo" name="codigo" type="number" placeholder="codigo" autocomplete="off">
+       <input class="form-control input-lg" id="qtde" name="qtde" type="number" placeholder="qtde" disabled="disabled" autocomplete="off">
+       <input class="form-control  input-lg ui-autocomplete-input" id="produto" name="produto" type="text" placeholder="Produto" autocomplete="off">
+       <button type="button" id="addItem" class="btn btn-success btn-lg" disabled="disabled">Adcionar</button>
+       <!-- <input type="text" class="form-control input-lg total" value="R$ 10,00"> -->
+
+    </div>
+    <!-- fim table -->
+    <!-- table -->
+    <table class="table itemProduto table-bordered table-striped">
+      <thead class="dataTables_scrollHead">
+        <tr>
+          <th>Codigo</th>
+          <th>Qtde</th>
+          <th>Produto</th>
+          <th>Valor Unid</th>
+          <th>Valor Total</th>
+          <th class="btD"></th>
+        </tr>
+      </thead>
+      <!-- registro -->
+      <tbody id="ttB">
+      {{=session.venda.itens}}
+     </tbody>
+    </table>
+  </div><!--fim do profile-->
+</div><!--fim do profile-->
+

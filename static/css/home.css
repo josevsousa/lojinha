@@ -1,0 +1,80 @@
+#logo-lojinha{
+    padding: 3px !important;
+    margin-right: 23px;
+   /* width: 84px;
+    height: 56px;*/
+}
+
+li#codView {
+    float: right;
+    font-size: 27px;
+    color: #217B06;
+    margin-top: -9px;
+}
+.formEditar img {
+    border-radius: 14px;
+    padding: 10px;
+    border: 1px solid #F5F5F5;
+    width: 305px;
+    margin: 14px 0;
+}
+img.img-rounded.thumbnail.fotoView {
+    padding: 9px;
+    border-radius: 12px;
+}
+.formEditar table tr td input, .formEditar table tr td select{
+    margin-bottom: 7px;
+}  
+.badgeAtivo{background-color: #24CE71 !important} 
+h3#codigoVenda {
+    margin-left: 16px;
+}
+div#home {
+    margin-top: 19px;
+}
+.ativo{
+    background: #B2F1CF
+}
+.dataTables_scrollHead {
+    background-color: #F3FFF8;
+    border: 1px solid #E1F5EA !important;
+}
+footer.footer.lojinha_cor.footer_lojinha {
+    background-color: #D4FBE6;
+    color: #105D08;
+}
+.breadcrumb li.at {
+    color: #6BB58A;
+}
+.breadcrumb li a {
+    color: #C3C3C3;
+}
+td.btD, td.btDD {
+    width: 47px;
+}   
+/*BARRAS HEAD E FOOTER*/
+#nav_home{
+    border-bottom: 1px solid #D9D9D9;
+    height: 54px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+#nav_home a{
+	color: #106107;
+}
+#nav_home .open>a, #nav_home a:hover, #nav_home a:focus{
+	background-color: #BDF5D7 !important
+}
+.lojinha_cor{
+	/*background-color: #C9F7FD;*/
+	background-color:#D4FBE6;
+}
+.footer_lojinha{
+    color: #106107;
+    padding-top: 22px; 
+    /*border-top: 1px solid #D9D9D9;*/
+}
+/*FIM DA HEADER E FOOTER*/

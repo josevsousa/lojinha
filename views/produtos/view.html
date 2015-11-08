@@ -1,0 +1,17 @@
+{{extend 'layoutLojinha.html'}}
+
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Codigo : {{=table[0].codigo_produto}}</h3>
+  </div>
+  <div class="panel-body">
+
+	Nome : {{=table[0].nome_produto}}</br>
+	Valor : R${{= " %.2f"% float(table[0].preco_produto_lojinha)}}</br>
+	Criado em :{{=table[0].dataGravado}}</br>
+
+  </div>
+</div>

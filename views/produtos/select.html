@@ -1,0 +1,43 @@
+{{extend 'layoutLojinha.html'}}
+
+	<h2>Produto <small> ( dados de cadastro )</small></h2>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<ul class="list-group">
+			  <li class="list-group-item"><strong>Codigo : </strong> {{=table[0].codigo_produto}}</li>
+			  <li class="list-group-item"><strong>Nome :</strong> {{=table[0].nome_produto}}</li>
+			  <li class="list-group-item"><strong>Valor :</strong> R${{= " %.2f"% float(table[0].preco_produto_lojinha)}}</li>
+			  <li class="list-group-item"><strong>Criado em :</strong>{{=table[0].dataGravado}}</li>
+			</ul>
+			<nav>
+			  <ul class="pager">
+			    <li class="previous"><a href="{{=URL('produtos','listarProdutos?menu=produtos')}}"><span aria-hidden="true">&larr;</span> voltar</a></li>
+			    <!-- <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li> -->
+			  </ul>
+			</nav>
+		</div>
+
+		<div class="col-md-6" style="text-align:center">
+	  	{{if table[0].foto_produto:}}
+	  		{{=IMG(_src=URL('default','download',args=table[0].foto_produto),_class="img-rounded thumbnail fotoView",_width="400px")}}
+	  	{{else:}}
+			{{=IMG(_src=URL('static','images/notImage.png'),_width="200px")}}
+	  	{{pass}}
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

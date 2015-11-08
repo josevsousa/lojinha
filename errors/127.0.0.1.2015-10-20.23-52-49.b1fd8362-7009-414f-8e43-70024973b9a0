@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<class 'sqlite3.IntegrityError'> UNIQUE constraint failed: clientes.nome"
+p3
+sS'layer'
+p4
+S'/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py'
+p5
+sS'code'
+p6
+S'def produtos(): \n    path = request.folder+"static/mysqlImport/produtos.csv"\n    f = file(path,\'r\')\n\n    # linha = f.readline().split(\',\')\n    \n    for l in f.readlines():\n    \tlinha = l.split(\',\')\n    \tdb.produtos.insert(codigo_produto=linha[1],nome_produto=linha[2],preco_produto_lojinha=linha[5],dataGravado=linha[4])\n    \n    f.close()\n\n    return dict()\n\ndef clientes(): \n    path = request.folder+"static/mysqlImport/clientes_lojinha.csv"\n    f = file(path,\'r\')\n\n    # linha = f.readline().split(\',\')\n\n    for l in f.readlines():\n        linha = l.split(\',\')\n        celular = linha[2].split(\' - \')\n        cel = "%s"%celular[0]\n        operadora = "%s"%celular[1]\n        print linha[1]+" : "+cel+" : "+operadora+" : "+linha[3]+" : "+linha[4]\n        # db.clientes.insert(nome=linha[1],celular=cel,operadora=operadora,email=linha[3],dataGravado=linha[4])\n        pass\n        \n\tdb.clientes.insert(nome="josede",celular="ddddddd",operadora="kkdkk",email="jose@jsodev",dataGravado="2014-10-01 02:20:10")\n\n\n    return dict()\n\n    \nresponse._vars=response._caller(clientes)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/python/web2pyLojinha/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py", line 36, in <module>\n  File "/home/python/web2pyLojinha/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py", line 30, in clientes\n    db.clientes.insert(nome="josede",celular="ddddddd",operadora="kkdkk",email="jose@jsodev",dataGravado="2014-10-01 02:20:10")\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/objects.py", line 712, in insert\n    ret = self._db._adapter.insert(self, self._listify(fields))\n  File "/home/python/web2pyLojinha/gluon/packages/dal/pydal/adapters/base.py", line 739, in insert\n    raise e\nIntegrityError: UNIQUE constraint failed: clientes.nome\n'
+p11
+s.

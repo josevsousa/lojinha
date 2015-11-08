@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.TypeError'> URL() got an unexpected keyword argument '_args'"
+p3
+sS'layer'
+p4
+S'/home/python/web2py_SYS/applications/lojinha/controllers/produtos.py'
+p5
+sS'code'
+p6
+S"@auth.requires_membership('admin')\ndef cadastrarProdutos():\n\tmenu = 'produtos'\n\treturn dict(formCadastro=crud.create(db.produtos))\n\n\ndef listarProdutos___():\n\tmenu = 'produtos'\n\treturn dict(formListar=crud.select(db.produtos, db.produtos.id>0)) #db.books.id>0,['id','titulo']\n\n@auth.requires_login()\ndef listarProdutos():\n\tprodutos = db(db.produtos.id>0).select()\n\t#return dict(livros=livros)\n\n\t#virtaul fields\n\tclass Virtual(object):\n\t\tdef botoes(self):\n\t\t\t#admin\n\t\t\tif auth.has_membership('admin'):   #URL('produtos','deletar',args=[self.produtos.id])\n\t\t\t\tbts = DIV(XML(A(SPAN(_class='glyphicon glyphicon-eye-open'),_href=URL('produtos','select',args=[self.produtos.id]),_class='btn btn-default f Jview btn-xs')),XML(A(SPAN(_class='glyphicon glyphicon-pencil'),_href=URL('produtos','update',args=[self.produtos.id]),_class='btn btn-default Jview btn-xs')),XML(A(SPAN(_class='glyphicon glyphicon-remove'),_href='#',_class='btn btn-default fechar Jview btn-xs')),_class='btn-group JpositionA')\n\t\t\t#user qualquer\n\t\t\telse:\n\t\t\t\tbts = DIV(XML(A(SPAN(_class='glyphicon glyphicon-eye-open'),_href=URL('produtos','select',args=[self.produtos.id]),_class='btn btn-default f Jview btn-xs')),XML(A(SPAN(_class='glyphicon glyphicon-pencil'),_href='#',_class='btn btn-default Jview btn-xs',_disabled='disabled')),XML(A(SPAN(_class='glyphicon glyphicon-remove'),_href='#',_class='btn btn-default Jview btn-xs',_disabled='disabled')),_class='btn-group JpositionA')\n\t\t\treturn bts\n\n\t\tdef img(self): \n\t\t\timg =  IMG(_src=URL('default','download',_args='1026'), _id='imgMin')\n\t\t\t# img =  IMG(_src=URL('static','/images/logo-lojinha.png'), _id='imgMin')\n\t\t\treturn img\n\n\tprodutos.setvirtualfields(campos_virtual = Virtual())\t\t\n\n\treturn dict(formListar=produtos)\n\n# ============== select insert update ==============\ndef selectCrud():\n\ttodos = crud.select(db.produtos, db.produtos.id == request.args(0),['codigo_produto','nome_produto','preco_produto_lojinha','dataGravado'])\n\treturn dict(form=todos)\n#select\ndef select():\n\ttable = db(db.produtos.id==request.args[0]).select()\n\treturn dict(table=table)\n#insert\n@auth.requires_membership('admin')\ndef inserir():\n\treturn dict()\n\t#return dict(form=crud.create(db.produtos))\n#update\n@auth.requires_membership('admin')\ndef update():\n\treturn dict(form=crud.update(db.produtos,request.args(0)))\n#delete\ndef deletar():\n\tprint request.vars.cod\n\tdb(db.produtos.codigo_produto == request.vars.cod).delete()\n\treturn ''\n\n\n# ===================================================\n\n\n#@auth.requires_membership('admin')\ndef listarProdutoss():\n    grid = SQLFORM.grid(db.produtos)\n    return dict(formListar=grid)\n\n\nresponse._vars=response._caller(listarProdutos)\n"
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/python/web2py_SYS/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/python/web2py_SYS/applications/lojinha/controllers/produtos.py", line 69, in <module>\n  File "/home/python/web2py_SYS/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/python/web2py_SYS/gluon/tools.py", line 3774, in f\n    return action(*a, **b)\n  File "/home/python/web2py_SYS/applications/lojinha/controllers/produtos.py", line 32, in listarProdutos\n    produtos.setvirtualfields(campos_virtual = Virtual())\n  File "/home/python/web2py_SYS/gluon/packages/dal/pydal/objects.py", line 2480, in setvirtualfields\n    box[attribute] = method()\n  File "/home/python/web2py_SYS/applications/lojinha/controllers/produtos.py", line 28, in img\n    img =  IMG(_src=URL(\'default\',\'download\',_args=\'1026\'), _id=\'imgMin\')\nTypeError: URL() got an unexpected keyword argument \'_args\'\n'
+p11
+s.

@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.ValueError'> dictionary update sequence element #0 has length 1; 2 is required"
+p3
+sS'layer'
+p4
+S'/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py'
+p5
+sS'code'
+p6
+S'def index(): \n  \n\n\n    return dict("ddd")\nresponse._vars=response._caller(index)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/python/web2pyLojinha/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py", line 6, in <module>\n  File "/home/python/web2pyLojinha/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/python/web2pyLojinha/applications/lojinha/controllers/importMysql.py", line 5, in index\n    return dict("ddd")\nValueError: dictionary update sequence element #0 has length 1; 2 is required\n'
+p11
+s.
