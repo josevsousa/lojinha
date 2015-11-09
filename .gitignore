@@ -1,0 +1,10 @@
+
+
+# sqlite database files
+
+
+# web2py cache, errors and sessions files
+cache/*
+errors/*
+sessions/*
+cache/*
