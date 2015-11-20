@@ -31,12 +31,12 @@
 	})
 </script>
 <style type="text/css">
-/*	td#opcoes {width: 201px;}
-	td#opcoes div{float: right;}
+	td.opcoes {width: 120px !important;}
+/*	td#opcoes div{float: right;}
 	td#opcoes div button{margin-right: 0px !important}
 	.idS {display:none !important;}
 */	.JpositionA{float: right;}
-	.JpositionA a{margin-right: 0px !important}
+	.JpositionA a{margin-right: 0px !important;}
 
 </style>
 
@@ -44,7 +44,7 @@
 
 <input type="text"  name='cod' style="display:none">
 <div id="minhaTabela" class="container">
-		<a class="btn btn-default" href="/lojinha/clientes/cadastrarClientes?menu=clientes"><span class="glyphicon glyphicon-plus"></span> Novo Cliente</a>
+		<a class="btn btn-default" href="/{{=request.application}}/clientes/cadastrarClientes?menu=clientes"><span class="glyphicon glyphicon-plus"></span> Novo Cliente</a>
 	
 	<hr>
 	<table id="dataTable" class="table table-striped hover" cellspacing="0" width="100%" >

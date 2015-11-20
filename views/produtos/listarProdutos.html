@@ -28,6 +28,7 @@
 
 </script>
 <style type="text/css">
+	td.opcoes {width: 120px !important;}
 /*	td#opcoes {width: 201px;}
 	td#opcoes div{float: right;}
 	td#opcoes div button{margin-right: 0px !important}
@@ -35,15 +36,7 @@
 */	.JpositionA{float: right;}
 	.JpositionA a{margin-right: 0px !important}
 	#cod{display:none;}
-	#imgMin{
-	    width: 28px;
-	    border: 1px #ccc solid;
-	    border-radius: 3px;
-	    padding: 2px;
-	}
-	#dataTable tbody tr th:first-child{
-		padding: 5px 15px !important;
-	}
+
 
 </style>
 
@@ -51,7 +44,7 @@
 <div id="minhaTabela" class="container">
 
 {{if auth.has_membership('admin'):}}
-	<a class="btn btn-default" href="/lojinha/produtos/cadastrarProdutos?menu=produtos"><span class="glyphicon glyphicon-plus"></span> Novo Produto</a>
+	<a class="btn btn-default" href="/{{=request.application}}/produtos/cadastrarProdutos?menu=produtos"><span class="glyphicon glyphicon-plus"></span> Novo Produto</a>
 {{else:}}
 	<a class="btn btn-default" disabled="disabled" href="#"><span class="glyphicon glyphicon-plus"></span> Novo produto</a>
 {{pass}}
@@ -61,7 +54,6 @@
 <table id="dataTable" class="table table-striped hover" cellspacing="0" width="100%" >
 <thead>
 	<tr>
-		<!-- <th>Foto</th> -->
 		<th>Codigo da peça</th>
 		<th>Nome do produto</th>
 		<th>Preço</th>
@@ -69,7 +61,7 @@
 	</tr> 
 	<tbody>
 		{{for produto in formListar:}}
-			<tr>	
+			<tr>
 				<td>{{=produto.produtos.codigo_produto}}</td>
 				<td>{{=produto.produtos.nome_produto}}</td>
 				<td>R${{= " %.2f"%float(produto.produtos.preco_produto_lojinha)}}</td>
@@ -79,4 +71,5 @@
 	</tbody>
 </thead>
 </table>
+
 </div>
