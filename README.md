@@ -1,5 +1,5 @@
 # lojinha
-user  : admin@gmail.com   
+user  : admin@admin.com   
 senha : admin
 
 CRUD estilizado com web2py, datagrid( plugin_JS ), jqueryUi( autocomplit ). 
